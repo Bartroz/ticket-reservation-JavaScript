@@ -356,15 +356,8 @@ body {
 		position: relative;
 		height: 900px;
 		&__panel {
-			&__flight-places {
-				height: 170px;
-				flex-direction: row;
-			}
-
-			&__passengers {
-				height: 170px;
-				flex-direction: row;
-			}
+			&__flight-places,
+			&__passengers,
 			&__travel-date {
 				height: 170px;
 				flex-direction: row;
@@ -379,13 +372,9 @@ body {
 
 			&__luggage {
 				height: 120px;
-				&__info {
-					margin-bottom: 20px;
-					font-size: 25px;
-				}
-
+				&__info,
 				p {
-					margin-bottom: 12px;
+					margin-bottom: 20px;
 					font-size: 25px;
 				}
 			}
@@ -429,21 +418,23 @@ body {
 
 @media screen and (min-width: 992px) {
 	.paragraph-style {
-		margin-bottom: 8px;
-		font-size: 20px;
+		margin-bottom: 20px;
+		font-size: 25px;
 	}
 	.inputSelect {
-		@include inputStyle(260px, 25px, 18px);
+		@include inputStyle(400px, 25px, 22px);
 	}
 	body {
 		@include imageCenter('/src/images/clouds1920.jpg');
 		height: 100%;
 	}
 	.navigation {
-		height: 150px;
+		height: 130px;
 		&__date-hour {
+			font-size: 20px;
 			&__date {
 				&--margin {
+					width: 200px;
 					margin: 18px 0;
 				}
 			}
@@ -458,6 +449,7 @@ body {
 		&__login {
 			&__login-button {
 				&--colors {
+					font-size: 20px;
 					padding: 10px 20px;
 					transition: background-color 0.5s, color 0.5s;
 					&:hover {
@@ -477,7 +469,6 @@ body {
 					padding: 15px;
 				}
 				button {
-					
 					padding: 15px 40px;
 					font-size: 25px;
 				}
@@ -488,11 +479,11 @@ body {
 		}
 	}
 	.header {
-		height: 150px;
+		height: 200px;
 		&__text {
 			&__headline {
 				&--font {
-					font-size: 40px;
+					font-size: 38px;
 				}
 			}
 			&__paragraph {
@@ -504,31 +495,19 @@ body {
 		}
 	}
 	.container {
-		height: 1000px;
+		height: 1100px;
 		&__panel {
 			&__flight-places,
 			&__passengers,
 			&__travel-date {
-				height: 130px;
+				height: 220px;
 			}
-			&__passengers {
-				&__options {
-					&__adults,
-					&__childrens {
-						margin: 35px 100px 0;
-					}
-				}
-			}
-			&__travel-date {
-				&__options {
-					&__departure-date,
-					&__return-date {
-						margin: 35px 100px 0;
-					}
-				}
+			&__luggage {
+				height: 120px;
 			}
 			&__submit-button {
-				bottom: 8%;
+				font-size: 35px;
+				bottom: 5%;
 				transition: padding 0.5s, color 0.5s, background-color 0.5s;
 				&:hover {
 					> #icon {
@@ -540,24 +519,27 @@ body {
 					color: $whiteColor;
 				}
 			}
+			&__info {
+				font-size: 22px;
+			}
+		}
+		&__error {
+			bottom: 15%;
+			font-size: 25px;
 		}
 	}
 	.footer {
 		height: 80px;
-
+		&__rights {
+			font-size: 20px;
+		}
 		.footer-links {
+			font-size: 15px;
 			&__link {
 				margin: 0 64px;
 			}
 		}
 	}
-}
-
-.header {
-	height: 170px;
-}
-.inputSelect {
-	@include inputStyle(200px, 23px, 17px);
 }
 
 .errorAnimation {

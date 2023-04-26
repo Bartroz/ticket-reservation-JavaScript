@@ -1,0 +1,22 @@
+{
+	"destination": [
+		{
+			"id": 1,
+			"value": "wroclaw",
+			"desc": "Wrocław",
+			"code": "wro"
+		},
+		{
+			"id": 2,
+			"value": "losAngeles",
+			"desc": "Los Angeles",
+			"code": "la"
+		},
+		{
+			"id": 3,
+			"value": "bangkok",
+			"desc": "Bangkok",
+			"code": "bang"
+		}
+	]
+}
