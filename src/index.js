@@ -54,18 +54,18 @@ function checkIfEmpty() {
 				errorBorderStyle,
 				errorColor
 			)
-
 			break
 		case arrivalCities.value === '0':
-			showComunicate([arrivalCities], errorInfo, 'errorAnimation', 'Choose arrival city!', '1px solid red', errorColor)
+			showComunicate([arrivalCities], errorInfo, 'errorAnimation', 'Choose arrival city!', errorBorderStyle, errorColor)
 			break
+
 		case adultsPassenegers.value === '0':
 			showComunicate(
 				[adultsPassenegers],
 				errorInfo,
 				'errorAnimation',
 				'Choose at least one passenger',
-				'1px solid red',
+				errorBorderStyle,
 				errorColor
 			)
 			break
@@ -75,13 +75,13 @@ function checkIfEmpty() {
 				errorInfo,
 				'errorAnimation',
 				'Select departure date',
-				'1px solid red',
+				errorBorderStyle,
 				errorColor
 			)
 
 			break
 		case inputReturnDate.value === '':
-			showComunicate([inputReturnDate], errorInfo, 'errorAnimation', 'Select return date', '1px solid red', errorColor)
+			showComunicate([inputReturnDate], errorInfo, 'errorAnimation', 'Select return date', errorBorderStyle, errorColor)
 
 			break
 		case luggageAmount.value === '0':
@@ -90,7 +90,7 @@ function checkIfEmpty() {
 				errorInfo,
 				'errorAnimation',
 				'Please select luggage amount',
-				'1px solid red',
+				errorBorderStyle,
 				errorColor
 			)
 			break
@@ -102,7 +102,7 @@ const checkLogin = () => {
 		case login.value.length === 0:
 			login.style.border = 'none'
 			password.style.border = 'none'
-			showComunicate([login], signInErrorInfo, 'errorInfoAnimation', 'Please enter login', '1px solid red', errorColor)
+			showComunicate([login], signInErrorInfo, 'errorInfoAnimation', 'Please enter login', errorBorderStyle, errorColor)
 			break
 		case password.value.length === 0:
 			login.style.border = 'none'
@@ -112,7 +112,7 @@ const checkLogin = () => {
 				signInErrorInfo,
 				'errorInfoAnimation',
 				'Please enter password',
-				'1px solid red',
+				errorBorderStyle,
 				errorColor
 			)
 			break
@@ -122,7 +122,7 @@ const checkLogin = () => {
 				signInErrorInfo,
 				'errorInfoAnimation',
 				`Welcome back ${login.value}!`,
-				'2px solid lawngreen',
+				welcomeBorderStyle,
 				welcomeColor
 			)
 	}
@@ -142,7 +142,7 @@ const showComunicate = (param1, param2, param3, param4, param5, param6) => {
 	param2.textContent = param4
 }
 
-const hideError = (param1, param2, param3) => {
+const hideError = (param1, param2, param3, param4) => {
 	for (let param of param1) {
 		param.style.border = 'none'
 		param.style.color = 'none'
@@ -150,7 +150,7 @@ const hideError = (param1, param2, param3) => {
 	for (let nextParam of param2) {
 		nextParam.style.display = 'none'
 	}
-	param2.classList.remove('errorAnimation')
+	param3.classList.remove(param4)
 }
 
 fetch('https://raw.githubusercontent.com/Bartroz/ticket-reservation-JavaScript/main/endpoints/inital.json')
@@ -228,25 +228,42 @@ signInButton.addEventListener('click', checkLogin)
 
 document.addEventListener('click', function (event) {
 	if (!loginPanel.contains(event.target)) {
-		hideError([login, password], [loginPanel, signInErrorInfo])
-		signInErrorInfo.classList.remove('errorInfoAnimation')
+		hideError([login, password], [loginPanel, signInErrorInfo], signInErrorInfo, 'errorInfoAnimation')
 	}
 })
 
 document.addEventListener('keypress', e => {
-	if (e.key === 'Enter') {
+	if (e.key === 'Enter' && loginPanel.style.display === 'flex') {
 		checkLogin()
 	}
 })
 
 loginCloseButton.addEventListener('click', () => {
-	hideError([login, password], [loginPanel, signInErrorInfo])
-	signInErrorInfo.classList.remove('errorInfoAnimation')
+	hideError([login, password], [loginPanel, signInErrorInfo], signInErrorInfo, 'errorInfoAnimation')
 })
 
-departureCities.addEventListener('change', () => hideError([departureCities], [errorInfo]))
-arrivalCities.addEventListener('change', () => hideError([arrivalCities], [errorInfo]))
-adultsPassenegers.addEventListener('change', () => hideError([adultsPassenegers], [errorInfo]))
-inputDepartureDate.addEventListener('change', () => hideError([inputDepartureDate], [errorInfo]))
-inputReturnDate.addEventListener('change', () => hideError([inputReturnDate], [errorInfo]))
-luggageAmount.addEventListener('change', () => hideError([luggageAmount], [errorInfo]))
+departureCities.addEventListener('change', () => hideError([departureCities], [errorInfo], errorInfo, 'errorAnimation'))
+arrivalCities.addEventListener('change', () => hideError([arrivalCities], [errorInfo], errorInfo, 'errorAnimation'))
+adultsPassenegers.addEventListener('change', () =>
+	hideError([adultsPassenegers], [errorInfo], errorInfo, 'errorAnimation')
+)
+inputDepartureDate.addEventListener('change', () =>
+	hideError([inputDepartureDate], [errorInfo], errorInfo, 'errorAnimation')
+)
+
+inputReturnDate.addEventListener('change', () => hideError([inputReturnDate], [errorInfo], errorInfo, 'errorAnimation'))
+
+luggageAmount.addEventListener('change', () => hideError([luggageAmount], [errorInfo], errorInfo, 'errorAnimation'))
+
+submitButton.addEventListener('click', () => {
+	if (
+		departureCities.value !== '0' &&
+		arrivalCities.value !== '0' &&
+		adultsPassenegers.value !== '0' &&
+		inputDepartureDate.value !== '' &&
+		inputReturnDate.value !== '' &&
+		luggageAmount.value !== '0'
+	) {
+		window.location.href = '/summary.html'
+	}
+})
