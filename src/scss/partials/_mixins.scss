@@ -1,0 +1,35 @@
+@mixin flexCenter() {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+@mixin posAbsuluteCenter() {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate((-50%, -50%));
+}
+@mixin inputStyle($width, $height, $fontSize) {
+	width: $width;
+	height: $height;
+	text-align: center;
+	font-size: $fontSize;
+	font-style: italic;
+	border: none;
+	border-radius: 10px;
+	background-color: rgba(254, 247, 247, 0.8);
+}
+
+@mixin resetMarginPadding() {
+	margin: 0;
+	padding: 0;
+}
+
+@mixin imageCenter($url) {
+	height: 100%;
+	background-image: url($url);
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	position: sticky;
+}

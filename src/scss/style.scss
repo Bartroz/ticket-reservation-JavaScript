@@ -1,0 +1,599 @@
+@import './partials/mixins';
+@import './partials/colors';
+
+$navFont: 14px;
+
+.inputSelect {
+	@include inputStyle(200px, 17px, 12px);
+}
+.upper-div {
+	margin: 15px 0 10px;
+}
+.bottom-div {
+	margin-bottom: 20px;
+}
+
+.paragraph-style {
+	margin-bottom: 5px;
+	font-size: 15px;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	height: 100vh;
+	font-family: 'Montserrat', sans-serif;
+	@include imageCenter('/src/images/clouds640.jpg');
+}
+
+.navigation {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	background-color: #e2d5d573;
+	height: 75px;
+	&__weather {
+		font-size: 20px;
+	}
+	&__date-hour {
+		@include flexCenter();
+		align-items: flex-start;
+		flex-direction: column;
+		width: 100px;
+		font-size: $navFont;
+
+		&__date {
+			&--margin {
+				margin: 5px 0;
+				i {
+					margin-right: 5px;
+				}
+			}
+		}
+		&__time {
+			&--padding {
+				padding-bottom: 3px;
+				margin-bottom: 5px;
+				i {
+					margin-right: 5px;
+				}
+			}
+		}
+	}
+
+	&__login {
+		&__login-button {
+			&--colors {
+				padding: 7px 10px;
+				font-size: $navFont;
+				font-style: italic;
+				font-weight: bold;
+				color: $whiteColor;
+				background-color: $primaryColor;
+				border: 1px solid black;
+				border-radius: 5px;
+				box-shadow: 1px 1px 2px #fff;
+			}
+		}
+	}
+	&__login-panel {
+		@include posAbsuluteCenter();
+		display: none;
+		justify-content: center;
+		align-items: center;
+		background-image: url('/src/images/Sky640.jpg');
+		background-size: cover;
+		background-position: center;
+		height: 85vh;
+		width: 90vw;
+		border-radius: 20px;
+		z-index: 5;
+
+		&__inputs {
+			position: relative;
+			@include flexCenter();
+			flex-direction: column;
+			width: 100%;
+			z-index: 5;
+			input {
+				padding: 5px;
+				margin: 10px 0;
+				width: 50%;
+			}
+			button {
+				margin-top: 20px;
+				padding: 10px 30px;
+				font-size: 15px;
+				font-weight: bold;
+				color: $whiteColor;
+				background-color: $primaryColor;
+				border: 2px solid $secondaryColor;
+				border-radius: 15px;
+				transition: background-color 1s, color 1s, border 1s;
+				&:hover {
+					color: royalblue;
+					background-color: $whiteColor;
+					border: 1px solid royalblue;
+				}
+			}
+			i {
+				position: absolute;
+				font-size: 30px;
+				padding: 10px;
+				top: -100%;
+				right: 5%;
+			}
+		}
+		&__error {
+			position: absolute;
+			z-index: 6;
+			top: -50%;
+			color: red;
+			font-size: 17px;
+		}
+	}
+}
+
+.header {
+	position: relative;
+	height: 130px;
+	width: 100%;
+	background-color: $primaryColor;
+	&__text {
+		@include posAbsuluteCenter();
+		width: 100%;
+		&__headline {
+			&--font {
+				text-align: center;
+				font-size: 24px;
+			}
+		}
+		&__paragraph {
+			&--style {
+				margin-top: 8px;
+				text-align: center;
+				font-size: 16px;
+			}
+		}
+	}
+}
+
+.container {
+	position: relative;
+	height: 650px;
+
+	&__panel {
+		height: 100%;
+		background-color: $secondaryColor;
+
+		&__flight-places {
+			@include flexCenter();
+			flex-direction: column;
+
+			&__departure,
+			&__arrival {
+				@include flexCenter();
+				flex-direction: column;
+				width: 100%;
+			}
+		}
+
+		&__passengers {
+			@include flexCenter();
+			flex-direction: column;
+
+			&__adults,
+			&__childrens {
+				@include flexCenter();
+				flex-direction: column;
+				width: 100%;
+			}
+		}
+
+		&__travel-date {
+			@include flexCenter();
+			flex-direction: column;
+
+			&__departure-date,
+			&__return-date {
+				@include flexCenter();
+				flex-direction: column;
+				width: 100%;
+			}
+		}
+
+		&__luggage {
+			@include flexCenter();
+		}
+
+		&__submit-button {
+			position: absolute;
+			left: 50%;
+			bottom: 3%;
+			transform: translateX(-50%);
+			padding: 2px 10px;
+			font-size: 25px;
+			border-radius: 5px;
+			background-color: transparent;
+			color: rgb(65, 105, 225);
+		}
+
+		&__info {
+			background-color: $primaryColor;
+			font-size: 1rem;
+			padding: 5px 0;
+			text-align: center;
+		}
+	}
+
+	&__error {
+		display: none;
+		position: absolute;
+		bottom: 11%;
+		width: 100%;
+		font-size: 15px;
+		text-align: center;
+	}
+}
+
+.footer {
+	height: 50px;
+	width: 100%;
+	background-color: $primaryColor;
+	border-top: 1px solid black;
+	&__rights {
+		margin-top: 5px;
+		padding-bottom: 7px;
+		font-style: italic;
+		font-size: 12px;
+		text-align: center;
+	}
+	.footer-links {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 10px;
+		margin-bottom: 10px;
+		&__link {
+			margin: 0 8px;
+			i {
+				margin-right: 5px;
+			}
+		}
+		a {
+			color: black;
+			text-decoration: none;
+			cursor: pointer;
+		}
+	}
+}
+
+@media screen and (min-width: 768px) {
+	.upper-div,
+	.bottom-div {
+		margin: 0px;
+	}
+
+	.inputSelect {
+		@include inputStyle(260px, 25px, 18px);
+	}
+
+	.paragraph-style {
+		margin-bottom: 15px;
+		font-size: 20px;
+	}
+	body {
+		@include imageCenter('/src/images/clouds1280.jpg');
+	}
+
+	.navigation {
+		height: 100px;
+		&__date-hour {
+			font-size: 20px;
+			&__date {
+				&--margin {
+					width: 140px;
+					margin: 15px 0;
+				}
+			}
+			&__time {
+				&--padding {
+					margin-bottom: 10px;
+				}
+			}
+		}
+
+		&__login {
+			&__login-button {
+				&--colors {
+					padding: 8px 15px;
+					font-size: 20px;
+				}
+			}
+		}
+		&__login-panel {
+			height: 1000px;
+			background-image: url('/src/images/sky1280.jpg');
+			&__inputs {
+				input {
+					padding: 10px;
+					margin: 20px 0;
+				}
+				button {
+					margin-top: 25px;
+					padding: 12px 40px;
+					font-size: 18px;
+				}
+			}
+			&__error {
+				font-size: 22px;
+			}
+		}
+	}
+
+	.header {
+		height: 165px;
+		&__text {
+			&__headline {
+				&--font {
+					font-size: 35px;
+				}
+			}
+			&__paragraph {
+				&--style {
+					margin-top: 25px;
+					font-size: 22px;
+				}
+			}
+		}
+	}
+
+	.container {
+		position: relative;
+		height: 900px;
+		&__panel {
+			&__flight-places {
+				height: 170px;
+				flex-direction: row;
+			}
+
+			&__passengers {
+				height: 170px;
+				flex-direction: row;
+			}
+			&__travel-date {
+				height: 170px;
+				flex-direction: row;
+			}
+
+			&__submit-button {
+				bottom: 5%;
+				padding: 8px 21px;
+				font-size: 32px;
+				border-radius: 15px;
+			}
+
+			&__luggage {
+				height: 120px;
+				&__info {
+					margin-bottom: 20px;
+					font-size: 25px;
+				}
+
+				p {
+					margin-bottom: 12px;
+					font-size: 25px;
+				}
+			}
+			&__info {
+				background-color: $primaryColor;
+				font-size: 20px;
+				padding: 7px 0;
+				text-align: center;
+			}
+		}
+
+		&__error {
+			display: none;
+			bottom: 16%;
+			font-size: 22px;
+		}
+	}
+
+	.footer {
+		height: 75px;
+		&__rights {
+			margin-top: 10px;
+			font-size: 18px;
+		}
+		.footer-links {
+			margin-top: 5px;
+			font-size: 13px;
+			&__link {
+				margin: 0 50px;
+				i {
+					margin-right: 10px;
+				}
+			}
+			a {
+				text-decoration: none;
+				cursor: pointer;
+			}
+		}
+	}
+}
+
+@media screen and (min-width: 992px) {
+	.paragraph-style {
+		margin-bottom: 8px;
+		font-size: 20px;
+	}
+	.inputSelect {
+		@include inputStyle(260px, 25px, 18px);
+	}
+	body {
+		@include imageCenter('/src/images/clouds1920.jpg');
+		height: 100%;
+	}
+	.navigation {
+		height: 150px;
+		&__date-hour {
+			&__date {
+				&--margin {
+					margin: 18px 0;
+				}
+			}
+			&__time {
+				&--padding {
+					padding-bottom: 3px;
+					margin-bottom: 10px;
+				}
+			}
+		}
+
+		&__login {
+			&__login-button {
+				&--colors {
+					padding: 10px 20px;
+					transition: background-color 0.5s, color 0.5s;
+					&:hover {
+						padding: 9px 19px;
+						border: 2px solid black;
+						color: rgb(55, 101, 240);
+						background-color: transparent;
+					}
+				}
+			}
+		}
+		&__login-panel {
+			height: 1250px;
+			background-image: url('/src/images/sky1920.jpg');
+			&__inputs {
+				input {
+					padding: 15px;
+				}
+				button {
+					
+					padding: 15px 40px;
+					font-size: 25px;
+				}
+			}
+			&__error {
+				font-size: 35px;
+			}
+		}
+	}
+	.header {
+		height: 150px;
+		&__text {
+			&__headline {
+				&--font {
+					font-size: 40px;
+				}
+			}
+			&__paragraph {
+				&--style {
+					margin-top: 15px;
+					font-size: 25px;
+				}
+			}
+		}
+	}
+	.container {
+		height: 1000px;
+		&__panel {
+			&__flight-places,
+			&__passengers,
+			&__travel-date {
+				height: 130px;
+			}
+			&__passengers {
+				&__options {
+					&__adults,
+					&__childrens {
+						margin: 35px 100px 0;
+					}
+				}
+			}
+			&__travel-date {
+				&__options {
+					&__departure-date,
+					&__return-date {
+						margin: 35px 100px 0;
+					}
+				}
+			}
+			&__submit-button {
+				bottom: 8%;
+				transition: padding 0.5s, color 0.5s, background-color 0.5s;
+				&:hover {
+					> #icon {
+						animation: discoverIcon 0.5s;
+						animation-fill-mode: forwards;
+					}
+					padding: 8px 30px;
+					background-color: $primaryColor;
+					color: $whiteColor;
+				}
+			}
+		}
+	}
+	.footer {
+		height: 80px;
+
+		.footer-links {
+			&__link {
+				margin: 0 64px;
+			}
+		}
+	}
+}
+
+.header {
+	height: 170px;
+}
+.inputSelect {
+	@include inputStyle(200px, 23px, 17px);
+}
+
+.errorAnimation {
+	animation: showError 1s;
+	animation-fill-mode: forwards;
+}
+
+.errorInfoAnimation {
+	animation: showInfoError 2s;
+	animation-fill-mode: forwards;
+}
+
+@keyframes discoverIcon {
+	from {
+		font-size: 0;
+	}
+	to {
+		font-size: 40px;
+	}
+}
+
+@keyframes showError {
+	from {
+		left: -100%;
+	}
+	to {
+		left: 0%;
+		margin: 0 auto;
+	}
+}
+
+@keyframes showInfoError {
+	from {
+		top: -50%;
+	}
+	to {
+		top: 30%;
+	}
+}
