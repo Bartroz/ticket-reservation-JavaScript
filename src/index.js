@@ -153,7 +153,7 @@ const hideError = (param1, param2, param3) => {
 	param2.classList.remove('errorAnimation')
 }
 
-fetch('https://raw.githubusercontent.com/Bartroz/Airlines-ticket-reservation-/main/endpoints/inital.json')
+fetch('https://raw.githubusercontent.com/Bartroz/ticket-reservation-JavaScript/main/endpoints/inital.json')
 	.then(res => res.json())
 	.then(data => data.destination)
 	.then(function (data) {

@@ -422,7 +422,7 @@ body {
 		font-size: 25px;
 	}
 	.inputSelect {
-		@include inputStyle(400px, 25px, 22px);
+		@include inputStyle(400px, 25px, 20px);
 	}
 	body {
 		@include imageCenter('/src/images/clouds1920.jpg');
@@ -466,7 +466,8 @@ body {
 			background-image: url('/src/images/sky1920.jpg');
 			&__inputs {
 				input {
-					padding: 15px;
+					padding: 10px;
+					font-size: 15px;
 				}
 				button {
 					padding: 15px 40px;
@@ -474,7 +475,7 @@ body {
 				}
 			}
 			&__error {
-				font-size: 35px;
+				font-size: 25px;
 			}
 		}
 	}
