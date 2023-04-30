@@ -1,10 +1,15 @@
 const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-	entry: './src/index.js',
+	entry: {
+		main: './src/index.js',
+		summaryPage: './src/summary.js',
+	},
 	output: {
 		path: path.resolve(__dirname, 'dist'),
-		filename: 'bundle.js',
+		filename: '[name].bundle.js',
+		clean: true,
 	},
 	devtool: 'source-map',
 	devServer: {
@@ -35,4 +40,17 @@ module.exports = {
 			},
 		],
 	},
+	plugins: [
+		new HtmlWebpackPlugin({
+			filename: 'index.html',
+			template: './src/index.html',
+			excludeChunks: ['summary'],
+			chunks: ['main'],
+		}),
+		new HtmlWebpackPlugin({
+			filename: 'summary.html',
+			template: './src/summary.html',
+			chunks: ['summary'],
+		}),
+	],
 }
