@@ -108,8 +108,8 @@
                 <label for="luggage"></label>
                 <select name="luggage" id="luggage" class="inputSelect">
                     <option value="0" selected disabled>Amount</option>
-                    <option value="1">Carry-on</option>
-                    <option value="2">Carry-on & trolley</option>
+                    <option value="Carry-on">Carry-on</option>
+                    <option value="Carry-on & trolley">Carry-on & trolley</option>
 
                 </select>
             </div>
@@ -125,7 +125,25 @@
         </p>
 
         <div class="container__plane"></div>
+
+
+
+
     </main>
+
+    <section class="summary">
+        <div class="summary__informations">
+            <div class="summary__informations__panel">
+                <div class="summary__informations__panel__departure-city"><i class="fa-sharp fa-solid fa-plane-departure"></i></div>
+                <div class="summary__informations__panel__arrival-city"><i class="fa-solid fa-plane-arrival"></i></div>
+                <div class="summary__informations__panel__departure-date">Departure <i class="fa-solid fa-calendar-days"></i></div>
+                <div class="summary__informations__panel__return-date">Return <i class="fa-solid fa-calendar-days"></i></div>
+                <div class="summary__informations__panel__passengers"><i class="fa-solid fa-person-walking-luggage"></i></div>
+                <div class="summary__informations__panel__luggage"><i class="fa-solid fa-suitcase"></i></div>
+            </div>
+        </div>
+        <div class="summary__flights">cośtam </div>
+    </section>
 
     <footer class="footer">
         <p class="footer__rights">CopyRight by Brochów Airlines</p>
@@ -142,6 +160,7 @@
         </div>
     </footer>
 
+    <script src="./bundle.js"></script>
 </body>
 
 </html>

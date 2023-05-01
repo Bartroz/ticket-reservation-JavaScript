@@ -2,19 +2,19 @@
 	"destination": [
 		{
 			"id": 1,
-			"value": "wroclaw",
+			"value": "Wroclaw",
 			"desc": "Wrocław",
 			"code": "wro"
 		},
 		{
 			"id": 2,
-			"value": "losAngeles",
+			"value": "Los Angeles",
 			"desc": "Los Angeles",
 			"code": "la"
 		},
 		{
 			"id": 3,
-			"value": "bangkok",
+			"value": "Bangkok",
 			"desc": "Bangkok",
 			"code": "bang"
 		}

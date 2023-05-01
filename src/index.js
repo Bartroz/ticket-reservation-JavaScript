@@ -24,6 +24,14 @@ const inputDepartureDate = document.querySelector('#departureDate')
 const inputReturnDate = document.querySelector('#returnDate')
 inputDepartureDate.setAttribute('min', departureDate)
 
+const summaryPage = document.querySelector('.summary')
+const summaryDepartureCity = document.querySelector('.summary__informations__panel__departure-city')
+const summaryArrivalCity = document.querySelector('.summary__informations__panel__arrival-city')
+const summaryDepartureDate = document.querySelector('.summary__informations__panel__departure-date')
+const summaryReturnDate = document.querySelector('.summary__informations__panel__return-date')
+const summaryPassenger = document.querySelector('.summary__informations__panel__passengers')
+const summaryLuggage = document.querySelector('.summary__informations__panel__luggage')
+
 const errorColor = 'red'
 const welcomeColor = 'lawngreen'
 const errorBorderStyle = `1px solid ${errorColor}`
@@ -35,7 +43,6 @@ let mm = String(today.getMonth() + 1).padStart(2, '0')
 let yyyy = today.getFullYear()
 let actualHour = today.getHours()
 let actualMin = today.getMinutes()
-
 
 today = dd + '.' + mm + '.' + yyyy
 
@@ -154,47 +161,44 @@ const hideError = (param1, param2, param3, param4) => {
 	param3.classList.remove(param4)
 }
 
+fetch('https://raw.githubusercontent.com/Bartroz/ticket-reservation-JavaScript/main/endpoints/inital.json')
+	.then(res => res.json())
+	.then(data => data.destination)
+	// .then(data => console.log(data))
+	.then(function (data) {
+		data.forEach(el => {
+			const option = document.createElement('option')
+			option.setAttribute('value', el.value)
+			departureCities.append(option)
+			option.innerText = el.desc
 
-	fetch('https://raw.githubusercontent.com/Bartroz/ticket-reservation-JavaScript/main/endpoints/inital.json')
-		.then(res => res.json())
-		.then(data => data.destination)
-		// .then(data => console.log(data))
-		.then(function (data) {
-			data.forEach(el => {
-				const option = document.createElement('option')
-				option.setAttribute('value', el.value)
-				departureCities.append(option)
-				option.innerText = el.desc
-
-				const option2 = document.createElement('option')
-				option2.setAttribute('value', el.value)
-				arrivalCities.append(option2)
-				option2.innerText = el.desc
-			
-			})
-
-			departureCities.addEventListener('click', () => {
-				const selectedValue = departureCities.value
-				const selectedValue2 = arrivalCities.value
-
-				for (let i = 0; i < arrivalCities.options.length; i++) {
-					if (arrivalCities.options[i].value === selectedValue) {
-						arrivalCities.options[i].disabled = true
-					} else {
-						arrivalCities.options[i].disabled = false
-					}
-				}
-				for (let i = 0; i < departureCities.options.length; i++) {
-					if (departureCities.options[i].value === selectedValue2) {
-						departureCities.options[i].disabled = true
-					} else {
-						departureCities.options[i].disabled = false
-					}
-				}
-			})
+			const option2 = document.createElement('option')
+			option2.setAttribute('value', el.value)
+			arrivalCities.append(option2)
+			option2.innerText = el.desc
 		})
-		.catch(err => console.log(err))
 
+		departureCities.addEventListener('click', () => {
+			const selectedValue = departureCities.value
+			const selectedValue2 = arrivalCities.value
+
+			for (let i = 0; i < arrivalCities.options.length; i++) {
+				if (arrivalCities.options[i].value === selectedValue) {
+					arrivalCities.options[i].disabled = true
+				} else {
+					arrivalCities.options[i].disabled = false
+				}
+			}
+			for (let i = 0; i < departureCities.options.length; i++) {
+				if (departureCities.options[i].value === selectedValue2) {
+					departureCities.options[i].disabled = true
+				} else {
+					departureCities.options[i].disabled = false
+				}
+			}
+		})
+	})
+	.catch(err => console.log(err))
 
 inputDepartureDate.addEventListener('change', () => {
 	Date.prototype.addDays = function (days) {
@@ -269,6 +273,13 @@ submitButton.addEventListener('click', () => {
 		inputReturnDate.value !== '' &&
 		luggageAmount.value !== '0'
 	) {
-		window.location.href = '/summary.html'
+		summaryPage.style.display = 'flex'
+		summaryDepartureCity.innerHTML = `<i class="fa-sharp fa-solid fa-plane-departure"></i> ${departureCities.value}`
+		summaryArrivalCity.innerHTML = `<i class="fa-solid fa-plane-arrival"></i> ${arrivalCities.value}`
+		// summaryDepartureDate.innerHTML = `Departure <i class="fa-solid fa-calendar-days"></i> ${departureDate.value}`
+		// summaryPassenger.innerHTML = `<i class="fa-solid fa-person-walking-luggage"></i> ${adultsPassenegers.value} ${
+		// 	(childerPassenegers.value === '0') ? 'abc' : `${childerPassenegers.value}`
+		// }`
+		summaryLuggage.innerHTML = `<i class="fa-solid fa-suitcase"></i> ${luggageAmount.value}`
 	}
 })
