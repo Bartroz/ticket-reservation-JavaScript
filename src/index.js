@@ -7,6 +7,7 @@ const signInButton = document.querySelector('#sign-in-button')
 const login = document.querySelector('#login')
 const password = document.querySelector('#password')
 const signInErrorInfo = document.querySelector('.navigation__login-panel__error')
+const container = document.querySelector('.container')
 
 const currentDate = document.querySelector('.navigation__date-hour__date--margin')
 const currentTime = document.querySelector('.navigation__date-hour__time--padding')
@@ -25,13 +26,6 @@ const inputReturnDate = document.querySelector('#returnDate')
 inputDepartureDate.setAttribute('min', departureDate)
 
 const summaryPage = document.querySelector('.summary')
-const summaryDepartureCity = document.querySelector('.summary__informations__panel-first__departure-city')
-const summaryArrivalCity = document.querySelector('.summary__informations__panel-first__arrival-city')
-const summaryDepartureDate = document.querySelector('.summary__informations__panel-first__departure-date')
-const summaryReturnDate = document.querySelector('.summary__informations__panel-second__return-date')
-const summaryPassenger = document.querySelector('.summary__informations__panel-second__passengers')
-const summaryLuggage = document.querySelector('.summary__informations__panel-second__luggage')
-const secondSummaryPanel = document.querySelector('.summary__informations__panel-second')
 
 const errorColor = 'red'
 const welcomeColor = 'lawngreen'
@@ -164,7 +158,6 @@ const hideError = (param1, param2, param3, param4) => {
 fetch('https://raw.githubusercontent.com/Bartroz/ticket-reservation-JavaScript/main/endpoints/inital.json')
 	.then(res => res.json())
 	.then(data => data.destination)
-	// .then(data => console.log(data))
 	.then(function (data) {
 		data.forEach(el => {
 			const option = document.createElement('option')
@@ -199,6 +192,22 @@ fetch('https://raw.githubusercontent.com/Bartroz/ticket-reservation-JavaScript/m
 		})
 	})
 	.catch(err => console.log(err))
+
+const getCurrentWeater = (cityName, APIKEY) => {
+	fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=${APIKEY}`)
+		.then(response => response.json())
+		.then(data => console.log(data))
+		.catch(err => console.log(err))
+}
+const getCurrentWeater1 = (lat, lon, APIKEY) => {
+	fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${APIKEY}&units=metric`)
+		.then(response => response.json())
+		.then(data => console.log(data))
+		.catch(err => console.log(err))
+}
+
+getCurrentWeater('Los Angeles', '979e98cbfff2fda43447f846275c2d9e')
+getCurrentWeater1(13.7524938, 100.4935089, '979e98cbfff2fda43447f846275c2d9e')
 
 inputDepartureDate.addEventListener('change', () => {
 	Date.prototype.addDays = function (days) {
@@ -252,10 +261,17 @@ loginCloseButton.addEventListener('click', () => {
 })
 
 departureCities.addEventListener('change', () => hideError([departureCities], [errorInfo], errorInfo, 'errorAnimation'))
-arrivalCities.addEventListener('change', () => hideError([arrivalCities], [errorInfo], errorInfo, 'errorAnimation'))
+
+arrivalCities.addEventListener('change', () => {
+	hideError([arrivalCities], [errorInfo], errorInfo, 'errorAnimation')
+	const departureWeather = document.querySelector('.navigation__arrival-weather')
+	departureWeather.innerHTML = arrivalCities.value
+})
+
 adultsPassenegers.addEventListener('change', () =>
 	hideError([adultsPassenegers], [errorInfo], errorInfo, 'errorAnimation')
 )
+
 inputDepartureDate.addEventListener('change', () =>
 	hideError([inputDepartureDate], [errorInfo], errorInfo, 'errorAnimation')
 )
@@ -273,23 +289,29 @@ submitButton.addEventListener('click', () => {
 		inputReturnDate.value !== '' &&
 		luggageAmount.value !== '0'
 	) {
-		summaryPage.style.display = 'flex'
-		summaryDepartureCity.innerHTML = `<i class="fa-sharp fa-solid fa-plane-departure"></i> ${departureCities.value}`
-		summaryArrivalCity.innerHTML = `<i class="fa-solid fa-plane-arrival"></i> ${arrivalCities.value}`
-		summaryDepartureDate.innerHTML = `<div> <i
+		const summaryDepartureCity = document.querySelector('.summary__informations__panel-first__departure-city')
+		const summaryArrivalCity = document.querySelector('.summary__informations__panel-first__arrival-city')
+		const summaryDepartureDate = document.querySelector('.summary__informations__panel-first__departure-date')
+		const summaryReturnDate = document.querySelector('.summary__informations__panel-second__return-date')
+		const summaryPassenger = document.querySelector('.summary__informations__panel-second__passengers')
+		const summaryLuggage = document.querySelector('.summary__informations__panel-second__luggage')
+		const secondSummaryPanel = document.querySelector('.summary__informations__panel-second')
+
+		setTimeout(() => {
+			summaryPage.style.display = 'flex'
+			container.style.display = 'none'
+			summaryDepartureCity.innerHTML = `<i class="fa-sharp fa-solid fa-plane-departure"></i> ${departureCities.value}`
+			summaryArrivalCity.innerHTML = `<i class="fa-solid fa-plane-arrival"></i> ${arrivalCities.value}`
+			summaryDepartureDate.innerHTML = `<div> <i
 		class="fa-solid fa-calendar-days"></i> <i class="fa-solid fa-arrow-right"></i> </div> ${inputDepartureDate.value}`
-		summaryReturnDate.innerHTML = `<div><i
+			summaryReturnDate.innerHTML = `<div><i
 		class="fa-solid fa-calendar-days"></i> <i class="fa-solid fa-arrow-left"></i></div> ${inputReturnDate.value}`
-		summaryPassenger.innerHTML = `<div><i class="fa-solid fa-user"></i> ${
-			adultsPassenegers.value
-		} </div> ${
-			childrenPassenegers.value === '0'
-				? ''
-				: `<div> <i class="fa-solid fa-child"></i> ${childrenPassenegers.value}</div> `
-		}`
-		summaryLuggage.innerHTML = `<i class="fa-solid fa-suitcase"></i> ${luggageAmount.value}`
+			summaryPassenger.innerHTML = `<div><i class="fa-solid fa-user"></i> ${adultsPassenegers.value} </div> ${
+				childrenPassenegers.value === '0'
+					? ''
+					: `<div> <i class="fa-solid fa-child"></i> ${childrenPassenegers.value}</div> `
+			}`
+			summaryLuggage.innerHTML = `<i class="fa-solid fa-suitcase"></i> ${luggageAmount.value}`
+		}, 500)
 	}
-	console.log(adultsPassenegers.value)
-	console.log(childrenPassenegers.value)
-	console.log(inputDepartureDate.value)
 })
