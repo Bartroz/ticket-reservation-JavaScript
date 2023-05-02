@@ -38,6 +38,7 @@ let mm = String(today.getMonth() + 1).padStart(2, '0')
 let yyyy = today.getFullYear()
 let actualHour = today.getHours()
 let actualMin = today.getMinutes()
+let actualTemp = 0
 
 today = dd + '.' + mm + '.' + yyyy
 
@@ -167,6 +168,8 @@ fetch('https://raw.githubusercontent.com/Bartroz/ticket-reservation-JavaScript/m
 
 			const option2 = document.createElement('option')
 			option2.setAttribute('value', el.value)
+			option2.setAttribute('data-lat', el.lat)
+			option2.setAttribute('data-lon', el.lon)
 			arrivalCities.append(option2)
 			option2.innerText = el.desc
 		})
@@ -192,22 +195,6 @@ fetch('https://raw.githubusercontent.com/Bartroz/ticket-reservation-JavaScript/m
 		})
 	})
 	.catch(err => console.log(err))
-
-const getCurrentWeater = (cityName, APIKEY) => {
-	fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=${APIKEY}`)
-		.then(response => response.json())
-		.then(data => console.log(data))
-		.catch(err => console.log(err))
-}
-const getCurrentWeater1 = (lat, lon, APIKEY) => {
-	fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${APIKEY}&units=metric`)
-		.then(response => response.json())
-		.then(data => console.log(data))
-		.catch(err => console.log(err))
-}
-
-getCurrentWeater('Los Angeles', '979e98cbfff2fda43447f846275c2d9e')
-getCurrentWeater1(13.7524938, 100.4935089, '979e98cbfff2fda43447f846275c2d9e')
 
 inputDepartureDate.addEventListener('change', () => {
 	Date.prototype.addDays = function (days) {
@@ -262,10 +249,28 @@ loginCloseButton.addEventListener('click', () => {
 
 departureCities.addEventListener('change', () => hideError([departureCities], [errorInfo], errorInfo, 'errorAnimation'))
 
+const getCurrentWeater = (lat, lon, APIKEY) => {
+	fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${APIKEY}&units=metric`)
+		.then(response => response.json())
+		.then(data => data.main.temp)
+		.then(function (data) {
+			return (actualTemp = data)
+		})
+		.catch(err => console.log(err))
+}
+
 arrivalCities.addEventListener('change', () => {
 	hideError([arrivalCities], [errorInfo], errorInfo, 'errorAnimation')
 	const departureWeather = document.querySelector('.navigation__arrival-weather')
-	departureWeather.innerHTML = arrivalCities.value
+
+	const selectedOption = arrivalCities.options[arrivalCities.selectedIndex]
+	const lon = selectedOption.getAttribute('data-lon')
+	const lat = selectedOption.getAttribute('data-lat')
+	getCurrentWeater(lat, lon, '979e98cbfff2fda43447f846275c2d9e')
+
+	setTimeout(() => {
+		departureWeather.innerHTML = `${arrivalCities.value} ${actualTemp.toFixed(1)}°C`
+	}, 150)
 })
 
 adultsPassenegers.addEventListener('change', () =>

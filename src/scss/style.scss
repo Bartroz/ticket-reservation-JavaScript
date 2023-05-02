@@ -45,6 +45,9 @@ body {
 	&__login {
 		@include flexCenter;
 	}
+	&__arrival-weather {
+		text-align: center;
+	}
 
 	&__date-hour {
 		@include flexCenter();
