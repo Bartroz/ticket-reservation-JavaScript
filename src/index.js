@@ -17,7 +17,7 @@ const submitButton = document.querySelector('.container__panel__submit-button ')
 const luggageAmount = document.querySelector('#luggage')
 
 const adultsPassenegers = document.querySelector('#adultPass')
-const childerPassenegers = document.querySelector('#childerPass')
+const childrenPassenegers = document.querySelector('#childrensPass')
 
 const departureDate = new Date().toISOString().split('T')[0]
 const inputDepartureDate = document.querySelector('#departureDate')
@@ -25,12 +25,13 @@ const inputReturnDate = document.querySelector('#returnDate')
 inputDepartureDate.setAttribute('min', departureDate)
 
 const summaryPage = document.querySelector('.summary')
-const summaryDepartureCity = document.querySelector('.summary__informations__panel__departure-city')
-const summaryArrivalCity = document.querySelector('.summary__informations__panel__arrival-city')
-const summaryDepartureDate = document.querySelector('.summary__informations__panel__departure-date')
-const summaryReturnDate = document.querySelector('.summary__informations__panel__return-date')
-const summaryPassenger = document.querySelector('.summary__informations__panel__passengers')
-const summaryLuggage = document.querySelector('.summary__informations__panel__luggage')
+const summaryDepartureCity = document.querySelector('.summary__informations__panel-first__departure-city')
+const summaryArrivalCity = document.querySelector('.summary__informations__panel-first__arrival-city')
+const summaryDepartureDate = document.querySelector('.summary__informations__panel-first__departure-date')
+const summaryReturnDate = document.querySelector('.summary__informations__panel-second__return-date')
+const summaryPassenger = document.querySelector('.summary__informations__panel-second__passengers')
+const summaryLuggage = document.querySelector('.summary__informations__panel-second__luggage')
+const secondSummaryPanel = document.querySelector('.summary__informations__panel-second')
 
 const errorColor = 'red'
 const welcomeColor = 'lawngreen'
@@ -86,7 +87,6 @@ function checkIfEmpty() {
 				errorBorderStyle,
 				errorColor
 			)
-
 			break
 		case inputReturnDate.value === '':
 			showComunicate([inputReturnDate], errorInfo, 'errorAnimation', 'Select return date', errorBorderStyle, errorColor)
@@ -276,10 +276,20 @@ submitButton.addEventListener('click', () => {
 		summaryPage.style.display = 'flex'
 		summaryDepartureCity.innerHTML = `<i class="fa-sharp fa-solid fa-plane-departure"></i> ${departureCities.value}`
 		summaryArrivalCity.innerHTML = `<i class="fa-solid fa-plane-arrival"></i> ${arrivalCities.value}`
-		// summaryDepartureDate.innerHTML = `Departure <i class="fa-solid fa-calendar-days"></i> ${departureDate.value}`
-		// summaryPassenger.innerHTML = `<i class="fa-solid fa-person-walking-luggage"></i> ${adultsPassenegers.value} ${
-		// 	(childerPassenegers.value === '0') ? 'abc' : `${childerPassenegers.value}`
-		// }`
+		summaryDepartureDate.innerHTML = `<div> <i
+		class="fa-solid fa-calendar-days"></i> <i class="fa-solid fa-arrow-right"></i> </div> ${inputDepartureDate.value}`
+		summaryReturnDate.innerHTML = `<div><i
+		class="fa-solid fa-calendar-days"></i> <i class="fa-solid fa-arrow-left"></i></div> ${inputReturnDate.value}`
+		summaryPassenger.innerHTML = `<div><i class="fa-solid fa-user"></i> ${
+			adultsPassenegers.value
+		} </div> ${
+			childrenPassenegers.value === '0'
+				? ''
+				: `<div> <i class="fa-solid fa-child"></i> ${childrenPassenegers.value}</div> `
+		}`
 		summaryLuggage.innerHTML = `<i class="fa-solid fa-suitcase"></i> ${luggageAmount.value}`
 	}
+	console.log(adultsPassenegers.value)
+	console.log(childrenPassenegers.value)
+	console.log(inputDepartureDate.value)
 })
