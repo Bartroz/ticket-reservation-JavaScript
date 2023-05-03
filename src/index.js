@@ -335,7 +335,9 @@ async function getflight() {
 	try {
 		const response = await fetch(url, options)
 		const result = await response.json()
-		console.log(result.itineraries)
+		console.log(result)
+		const durationInMunites = result
+		console.log(durationInMunites)
 	} catch (error) {
 		console.error(error)
 	}

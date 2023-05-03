@@ -10,19 +10,19 @@
 		},
 		{
 			"id": 2,
-			"value": "Dublin",
-			"desc": "Dublin",
-			"code": "DUB",
-			"lat": 53.350140,
-			"lon": -6.266155
+			"value": "Gdansk",
+			"desc": "Gdansk",
+			"code": "GDN",
+			"lat": 54.372158,
+			"lon":18.638306
 		},
 		{
 			"id": 3,
-			"value": "Alicante",
-			"desc": "Alicante",
-			"code": "ALC",
-			"lat": 38.34517000,
-			"lon": -0.48149000
+			"value": "Warsaw",
+			"desc": "Warsaw",
+			"code": "WAW",
+			"lat": 52.237049,
+			"lon": 21.017532
 		}
 	]
 }
