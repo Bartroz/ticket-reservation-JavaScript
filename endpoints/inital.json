@@ -4,25 +4,25 @@
 			"id": 1,
 			"value": "Wroclaw",
 			"desc": "Wrocław",
-			"code": "wro",
+			"code": "WRO",
 			"lat": 51.1089776,
 			"lon": 17.0326689
 		},
 		{
 			"id": 2,
-			"value": "Los Angeles",
-			"desc": "Los Angeles",
-			"code": "la",
-			"lat": 34.0536909,
-			"lon": -118.242766
+			"value": "Sofia",
+			"desc": "Sofia",
+			"code": "SOF",
+			"lat": 42.698334,
+			"lon": 23.319941
 		},
 		{
 			"id": 3,
-			"value": "Bangkok",
-			"desc": "Bangkok",
-			"code": "bang",
-			"lat": 13.7524938,
-			"lon": 100.4935089
+			"value": "Palermo",
+			"desc": "Palermo",
+			"code": "PMO",
+			"lat": 38.116669,
+			"lon": 13.366667
 		}
 	]
 }

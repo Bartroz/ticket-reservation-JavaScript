@@ -252,17 +252,18 @@ body {
 .summary {
 	@include posAbsuluteCenter;
 	@include imageCenter('/src/images/clouds640.jpg');
-	// display: flex;
+	display: flex;
 	justify-content: center;
 	align-items: flex-start;
 	flex-direction: column;
-	display: none;
-	height: 100vh;
+	// display: none;
 	width: 100%;
 	&__informations {
 		&__header {
 			text-align: center;
 			font-style: italic;
+			font-weight: 700;
+			color: $primaryColor;
 		}
 		position: relative;
 		display: flex;
@@ -330,6 +331,7 @@ body {
 		}
 	}
 	&__flights {
+		background-color: $secondaryColor;
 		height: 80%;
 		width: 100vw;
 	}

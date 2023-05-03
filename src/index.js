@@ -249,7 +249,7 @@ loginCloseButton.addEventListener('click', () => {
 
 departureCities.addEventListener('change', () => hideError([departureCities], [errorInfo], errorInfo, 'errorAnimation'))
 
-const getCurrentWeater = (lat, lon, APIKEY) => {
+const getCurrentTemperature = (lat, lon, APIKEY) => {
 	fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${APIKEY}&units=metric`)
 		.then(response => response.json())
 		.then(data => data.main.temp)
@@ -262,11 +262,11 @@ const getCurrentWeater = (lat, lon, APIKEY) => {
 arrivalCities.addEventListener('change', () => {
 	hideError([arrivalCities], [errorInfo], errorInfo, 'errorAnimation')
 	const departureWeather = document.querySelector('.navigation__arrival-weather')
-
 	const selectedOption = arrivalCities.options[arrivalCities.selectedIndex]
 	const lon = selectedOption.getAttribute('data-lon')
 	const lat = selectedOption.getAttribute('data-lat')
-	getCurrentWeater(lat, lon, '979e98cbfff2fda43447f846275c2d9e')
+	const apiKey = '979e98cbfff2fda43447f846275c2d9e'
+	getCurrentTemperature(lat, lon, apiKey)
 
 	setTimeout(() => {
 		departureWeather.innerHTML = `${arrivalCities.value} ${actualTemp.toFixed(1)}°C`
@@ -320,3 +320,24 @@ submitButton.addEventListener('click', () => {
 		}, 500)
 	}
 })
+async function getflight() {
+	const url =
+		'https://ryanair.p.rapidapi.com/flights?origin_code=WRO&destination_code=NY&origin_departure_date=2023-09-28&destination_departure_date=2023-10-28'
+	const options = {
+		method: 'GET',
+		headers: {
+			'X-RapidAPI-Key': '4b3ba86928msh83cd6a7d580ee08p1b7cddjsn2c4894141241',
+			'X-RapidAPI-Host': 'ryanair.p.rapidapi.com',
+		},
+	}
+
+	try {
+		const response = await fetch(url, options)
+		const result = await response.json()
+		console.log(result)
+	} catch (error) {
+		console.error(error)
+	}
+}
+
+getflight()
