@@ -320,21 +320,22 @@ submitButton.addEventListener('click', () => {
 		}, 500)
 	}
 })
+
 async function getflight() {
 	const url =
-		'https://ryanair.p.rapidapi.com/flights?origin_code=WRO&destination_code=NY&origin_departure_date=2023-09-28&destination_departure_date=2023-10-28'
+		'https://skyscanner44.p.rapidapi.com/search-extended?adults=1&origin=WRO&destination=DUB&departureDate=2023-05-03&returnDate=2023-05-04&currency=USD&stops=0%2C1%2C2&duration=50&startFrom=00%3A00&arriveTo=23%3A59&returnStartFrom=00%3A00&returnArriveTo=23%3A59'
 	const options = {
 		method: 'GET',
 		headers: {
 			'X-RapidAPI-Key': '4b3ba86928msh83cd6a7d580ee08p1b7cddjsn2c4894141241',
-			'X-RapidAPI-Host': 'ryanair.p.rapidapi.com',
+			'X-RapidAPI-Host': 'skyscanner44.p.rapidapi.com',
 		},
 	}
 
 	try {
 		const response = await fetch(url, options)
 		const result = await response.json()
-		console.log(result)
+		console.log(result.itineraries)
 	} catch (error) {
 		console.error(error)
 	}
