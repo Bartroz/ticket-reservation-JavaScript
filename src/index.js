@@ -323,7 +323,7 @@ submitButton.addEventListener('click', () => {
 
 async function getflight() {
 	const url =
-		'https://skyscanner44.p.rapidapi.com/search-extended?adults=1&origin=WRO&destination=DUB&departureDate=2023-05-03&returnDate=2023-05-04&currency=USD&stops=0%2C1%2C2&duration=50&startFrom=00%3A00&arriveTo=23%3A59&returnStartFrom=00%3A00&returnArriveTo=23%3A59'
+		'https://skyscanner44.p.rapidapi.com/search-extended?adults=1&origin=WAW&destination=GDN&departureDate=2023-05-03&currency=EUR&stops=0%2C1%2C2&duration=50&startFrom=00%3A00&arriveTo=23%3A59&returnStartFrom=00%3A00&returnArriveTo=23%3A59'
 	const options = {
 		method: 'GET',
 		headers: {
@@ -337,7 +337,7 @@ async function getflight() {
 		const result = await response.json()
 		console.log(result)
 		const durationInMunites = result
-		console.log(durationInMunites)
+		console.log(durationInMunites.itineraries)
 	} catch (error) {
 		console.error(error)
 	}

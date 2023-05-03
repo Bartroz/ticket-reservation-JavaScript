@@ -2,27 +2,28 @@
 	"destination": [
 		{
 			"id": 1,
-			"value": "Wroclaw",
-			"desc": "Wrocław",
-			"code": "WRO",
-			"lat": 51.1089776,
-			"lon": 17.0326689
+			"value": "Los Angeles",
+			"desc": "Los Angeles",
+			"code": "LAX",
+			"lat": 34.052235,
+			"lon": -118.243683
 		},
 		{
 			"id": 2,
-			"value": "Gdansk",
-			"desc": "Gdansk",
-			"code": "GDN",
-			"lat": 54.372158,
-			"lon":18.638306
+			"value": "Berlin",
+			"desc": "Berlin",
+			"code": "BER",
+			"lat": 52.520008,
+			"lon":13.404954
 		},
 		{
 			"id": 3,
-			"value": "Warsaw",
-			"desc": "Warsaw",
-			"code": "WAW",
-			"lat": 52.237049,
-			"lon": 21.017532
+			"value": "New York",
+			"desc": "New York",
+			"code": "JFK",
+			"lat": 40.730610,
+			"lon": -73.935242
+
 		}
 	]
 }
