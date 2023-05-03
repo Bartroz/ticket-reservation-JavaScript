@@ -10,19 +10,19 @@
 		},
 		{
 			"id": 2,
-			"value": "Sofia",
-			"desc": "Sofia",
-			"code": "SOF",
-			"lat": 42.698334,
-			"lon": 23.319941
+			"value": "Dublin",
+			"desc": "Dublin",
+			"code": "DUB",
+			"lat": 53.350140,
+			"lon": -6.266155
 		},
 		{
 			"id": 3,
-			"value": "Palermo",
-			"desc": "Palermo",
-			"code": "PMO",
-			"lat": 38.116669,
-			"lon": 13.366667
+			"value": "Alicante",
+			"desc": "Alicante",
+			"code": "ALC",
+			"lat": 38.34517000,
+			"lon": -0.48149000
 		}
 	]
 }
