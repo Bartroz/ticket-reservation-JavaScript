@@ -163,6 +163,7 @@ fetch('https://raw.githubusercontent.com/Bartroz/ticket-reservation-JavaScript/m
 		data.forEach(el => {
 			const option = document.createElement('option')
 			option.setAttribute('value', el.value)
+			option.setAttribute('data-code', el.code)
 			departureCities.append(option)
 			option.innerText = el.desc
 
@@ -170,6 +171,7 @@ fetch('https://raw.githubusercontent.com/Bartroz/ticket-reservation-JavaScript/m
 			option2.setAttribute('value', el.value)
 			option2.setAttribute('data-lat', el.lat)
 			option2.setAttribute('data-lon', el.lon)
+			option2.setAttribute('data-code', el.code)
 			arrivalCities.append(option2)
 			option2.innerText = el.desc
 		})
@@ -195,6 +197,37 @@ fetch('https://raw.githubusercontent.com/Bartroz/ticket-reservation-JavaScript/m
 		})
 	})
 	.catch(err => console.log(err))
+
+const getCurrentTemperature = (lat, lon, APIKEY) => {
+	fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${APIKEY}&units=metric`)
+		.then(response => response.json())
+		.then(data => data.main.temp)
+		.then(function (data) {
+			return (actualTemp = data)
+		})
+		.catch(err => console.log(err))
+}
+
+
+async function getflight(adults, departure, destination, departureDate, returnDate) {
+	const url = `https://skyscanner44.p.rapidapi.com/search-extended?adults=${adults}&origin=${departure}&destination=${destination}&departureDate=${departureDate}&returnDate=${returnDate}&currency=EUR&stops=0%2C1%2C2&duration=50&startFrom=00%3A00&arriveTo=23%3A59&returnStartFrom=00%3A00&returnArriveTo=23%3A59`
+	const options = {
+		method: 'GET',
+		headers: {
+			'X-RapidAPI-Key': '4b3ba86928msh83cd6a7d580ee08p1b7cddjsn2c4894141241',
+			'X-RapidAPI-Host': 'skyscanner44.p.rapidapi.com',
+		},
+	}
+
+	try {
+		const response = await fetch(url, options)
+		const result = await response.json()
+		console.log(result)
+	} catch (error) {
+		console.error(error)
+	}
+}
+
 
 inputDepartureDate.addEventListener('change', () => {
 	Date.prototype.addDays = function (days) {
@@ -249,27 +282,23 @@ loginCloseButton.addEventListener('click', () => {
 
 departureCities.addEventListener('change', () => hideError([departureCities], [errorInfo], errorInfo, 'errorAnimation'))
 
-const getCurrentTemperature = (lat, lon, APIKEY) => {
-	fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${APIKEY}&units=metric`)
-		.then(response => response.json())
-		.then(data => data.main.temp)
-		.then(function (data) {
-			return (actualTemp = data)
-		})
-		.catch(err => console.log(err))
-}
-
 arrivalCities.addEventListener('change', () => {
 	hideError([arrivalCities], [errorInfo], errorInfo, 'errorAnimation')
 	const departureWeather = document.querySelector('.navigation__arrival-weather')
-	const selectedOption = arrivalCities.options[arrivalCities.selectedIndex]
-	const lon = selectedOption.getAttribute('data-lon')
-	const lat = selectedOption.getAttribute('data-lat')
+	const selectedOption = departureCities.options[departureCities.selectedIndex]
+	const code = selectedOption.getAttribute('data-code')
+
+	const selectedOption1 = arrivalCities.options[arrivalCities.selectedIndex]
+	const lon1 = selectedOption1.getAttribute('data-lon')
+	const lat1 = selectedOption1.getAttribute('data-lat')
+	const code1 = selectedOption1.getAttribute('data-code')
+
 	const apiKey = '979e98cbfff2fda43447f846275c2d9e'
-	getCurrentTemperature(lat, lon, apiKey)
+	getCurrentTemperature(lat1, lon1, apiKey)
 
 	setTimeout(() => {
 		departureWeather.innerHTML = `${arrivalCities.value} ${actualTemp.toFixed(1)}°C`
+		getflight(adultsPassenegers.value, code, code1, inputDepartureDate.value, inputDepartureDate.value)
 	}, 150)
 })
 
@@ -320,27 +349,3 @@ submitButton.addEventListener('click', () => {
 		}, 500)
 	}
 })
-
-async function getflight() {
-	const url =
-		'https://skyscanner44.p.rapidapi.com/search-extended?adults=1&origin=WAW&destination=GDN&departureDate=2023-05-03&currency=EUR&stops=0%2C1%2C2&duration=50&startFrom=00%3A00&arriveTo=23%3A59&returnStartFrom=00%3A00&returnArriveTo=23%3A59'
-	const options = {
-		method: 'GET',
-		headers: {
-			'X-RapidAPI-Key': '4b3ba86928msh83cd6a7d580ee08p1b7cddjsn2c4894141241',
-			'X-RapidAPI-Host': 'skyscanner44.p.rapidapi.com',
-		},
-	}
-
-	try {
-		const response = await fetch(url, options)
-		const result = await response.json()
-		console.log(result)
-		const durationInMunites = result
-		console.log(durationInMunites.itineraries)
-	} catch (error) {
-		console.error(error)
-	}
-}
-
-getflight()
