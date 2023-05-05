@@ -47,6 +47,13 @@ currentTime.innerHTML = `<i class="fa-solid fa-clock"></i> ${actualHour}:${
 	actualMin < 10 ? `0${actualMin}` : actualMin
 }`
 
+let flightInfo = {
+	arrival: [],
+	departure: [],
+	duration: [],
+	ticketPrices: [],
+}
+
 function checkIfEmpty() {
 	switch (true) {
 		case departureCities.value === '0':
@@ -208,7 +215,6 @@ const getCurrentTemperature = (lat, lon, APIKEY) => {
 		.catch(err => console.log(err))
 }
 
-
 async function getflight(adults, departure, destination, departureDate, returnDate) {
 	const url = `https://skyscanner44.p.rapidapi.com/search-extended?adults=${adults}&origin=${departure}&destination=${destination}&departureDate=${departureDate}&returnDate=${returnDate}&currency=EUR&stops=0%2C1%2C2&duration=50&startFrom=00%3A00&arriveTo=23%3A59&returnStartFrom=00%3A00&returnArriveTo=23%3A59`
 	const options = {
@@ -222,12 +228,24 @@ async function getflight(adults, departure, destination, departureDate, returnDa
 	try {
 		const response = await fetch(url, options)
 		const result = await response.json()
-		console.log(result)
+
+		for (let i = 0; i < result.itineraries.results.length; i++) {
+			if (result.itineraries.results.length > 30) {
+				result.itineraries.results.length = 20
+			}
+			let resultsArr = result.itineraries.results[i].legs
+			resultsArr.forEach(el => {
+				flightInfo.arrival.push(el.arrival)
+				flightInfo.departure.push(el.departure)
+				flightInfo.duration.push(el.durationInMinutes)
+			})
+			let flightPrice = result.itineraries.results[i].pricing_options[0].price.amount
+			flightInfo.ticketPrices.push(flightPrice)
+		}	
 	} catch (error) {
 		console.error(error)
 	}
 }
-
 
 inputDepartureDate.addEventListener('change', () => {
 	Date.prototype.addDays = function (days) {
@@ -295,10 +313,10 @@ arrivalCities.addEventListener('change', () => {
 
 	const apiKey = '979e98cbfff2fda43447f846275c2d9e'
 	getCurrentTemperature(lat1, lon1, apiKey)
+	// getflight(adultsPassenegers.value, code, code1, inputDepartureDate.value, inputDepartureDate.value)
 
 	setTimeout(() => {
 		departureWeather.innerHTML = `${arrivalCities.value} ${actualTemp.toFixed(1)}°C`
-		getflight(adultsPassenegers.value, code, code1, inputDepartureDate.value, inputDepartureDate.value)
 	}, 150)
 })
 
