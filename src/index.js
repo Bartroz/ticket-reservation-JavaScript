@@ -26,6 +26,7 @@ const inputReturnDate = document.querySelector('#returnDate')
 inputDepartureDate.setAttribute('min', departureDate)
 
 const summaryPage = document.querySelector('.summary')
+const summaryFlight = document.querySelector('.summary__flights')
 
 const errorColor = 'red'
 const welcomeColor = 'lawngreen'
@@ -48,11 +49,25 @@ currentTime.innerHTML = `<i class="fa-solid fa-clock"></i> ${actualHour}:${
 }`
 
 let flightInfo = {
-	arrival: [],
-	departure: [],
-	duration: [],
+	arrivals: [],
+	departures: [],
+	durations: [],
 	ticketPrices: [],
 }
+// let flightInfo = {
+// 	arrival: [],
+// 	departure: [],
+// 	duration: [],
+// 	ticketPrices: [],
+// }
+
+let codeObj = {
+	code: '',
+	code1: '',
+}
+
+let selectedOption
+let selectedOption1
 
 function checkIfEmpty() {
 	switch (true) {
@@ -215,6 +230,44 @@ const getCurrentTemperature = (lat, lon, APIKEY) => {
 		.catch(err => console.log(err))
 }
 
+const getFlightInfo = param => {
+	for (let i = 0; i < param.itineraries.results.length; i++) {
+		if (param.itineraries.results.length > 10) {
+			param.itineraries.results.length = 3
+		}
+		let resultsArr = param.itineraries.results[i].legs
+		resultsArr.forEach(el => {
+			flightInfo.arrivals.push(el.arrival)
+			flightInfo.departures.push(el.departure)
+			flightInfo.durations.push(el.durationInMinutes)
+		})
+		let flightPrice = param.itineraries.results[i].pricing_options[0].price.amount
+		flightInfo.ticketPrices.push(flightPrice)
+	}
+	getFlightDataToDiv()
+}
+
+const createElementArr = [document.createElement('p'), document.createElement('p'), document.createElement('p')]
+
+const getFlightDataToDiv = () => {
+	if (flightInfo.arrivals.length !== 0) {
+		for (let i = 0; i < flightInfo.arrivals.length; i++) {
+			const summaryFlightDiv = document.createElement('div')
+
+			summaryFlightParagraph1.textContent = flightInfo.departures[i]
+			summaryFlightParagraph2.textContent = flightInfo.arrivals[i]
+			summaryFlightDiv.appendChild(summaryFlightParagraph1, summaryFlightParagraph2)
+			summaryFlightDiv.classList.add('summary__flights__flightInfo')
+			summaryFlight.appendChild(summaryFlightDiv)
+		}
+	} else {
+		const summaryFlightError = document.createElement('p')
+		summaryFlightError.classList.add('summary__flights__flightErrorInfo')
+		summaryFlightError.textContent = 'There is no available flights corresponding to your selected options.'
+		summaryFlight.appendChild(summaryFlightError)
+	}
+}
+
 async function getflight(adults, departure, destination, departureDate, returnDate) {
 	const url = `https://skyscanner44.p.rapidapi.com/search-extended?adults=${adults}&origin=${departure}&destination=${destination}&departureDate=${departureDate}&returnDate=${returnDate}&currency=EUR&stops=0%2C1%2C2&duration=50&startFrom=00%3A00&arriveTo=23%3A59&returnStartFrom=00%3A00&returnArriveTo=23%3A59`
 	const options = {
@@ -229,19 +282,7 @@ async function getflight(adults, departure, destination, departureDate, returnDa
 		const response = await fetch(url, options)
 		const result = await response.json()
 
-		for (let i = 0; i < result.itineraries.results.length; i++) {
-			if (result.itineraries.results.length > 30) {
-				result.itineraries.results.length = 20
-			}
-			let resultsArr = result.itineraries.results[i].legs
-			resultsArr.forEach(el => {
-				flightInfo.arrival.push(el.arrival)
-				flightInfo.departure.push(el.departure)
-				flightInfo.duration.push(el.durationInMinutes)
-			})
-			let flightPrice = result.itineraries.results[i].pricing_options[0].price.amount
-			flightInfo.ticketPrices.push(flightPrice)
-		}	
+		getFlightInfo(result)
 	} catch (error) {
 		console.error(error)
 	}
@@ -304,17 +345,18 @@ arrivalCities.addEventListener('change', () => {
 	hideError([arrivalCities], [errorInfo], errorInfo, 'errorAnimation')
 	const departureWeather = document.querySelector('.navigation__arrival-weather')
 	const selectedOption = departureCities.options[departureCities.selectedIndex]
-	const code = selectedOption.getAttribute('data-code')
-
 	const selectedOption1 = arrivalCities.options[arrivalCities.selectedIndex]
-	const lon1 = selectedOption1.getAttribute('data-lon')
-	const lat1 = selectedOption1.getAttribute('data-lat')
+
+	const lon = selectedOption1.getAttribute('data-lon')
+	const lat = selectedOption1.getAttribute('data-lat')
+	const code = selectedOption.getAttribute('data-code')
 	const code1 = selectedOption1.getAttribute('data-code')
 
-	const apiKey = '979e98cbfff2fda43447f846275c2d9e'
-	getCurrentTemperature(lat1, lon1, apiKey)
-	// getflight(adultsPassenegers.value, code, code1, inputDepartureDate.value, inputDepartureDate.value)
+	codeObj.code = code
+	codeObj.code1 = code1
 
+	const apiKey = '979e98cbfff2fda43447f846275c2d9e'
+	getCurrentTemperature(lat, lon, apiKey)
 	setTimeout(() => {
 		departureWeather.innerHTML = `${arrivalCities.value} ${actualTemp.toFixed(1)}°C`
 	}, 150)
@@ -348,6 +390,8 @@ submitButton.addEventListener('click', () => {
 		const summaryPassenger = document.querySelector('.summary__informations__panel-second__passengers')
 		const summaryLuggage = document.querySelector('.summary__informations__panel-second__luggage')
 		const secondSummaryPanel = document.querySelector('.summary__informations__panel-second')
+
+		getflight(adultsPassenegers.value, codeObj.code, codeObj.code1, inputDepartureDate.value, inputDepartureDate.value)
 
 		setTimeout(() => {
 			summaryPage.style.display = 'flex'
