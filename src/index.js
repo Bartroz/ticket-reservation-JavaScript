@@ -1,5 +1,8 @@
 import style from './scss/style.scss'
 
+const currentDate = document.querySelector('.navigation__date-hour__date--margin')
+const currentTime = document.querySelector('.navigation__date-hour__time--padding')
+
 const loginButton = document.querySelector('#login-button')
 const loginPanel = document.querySelector('.navigation__login-panel')
 const loginCloseButton = document.querySelector('#login-close-button')
@@ -7,23 +10,19 @@ const signInButton = document.querySelector('#sign-in-button')
 const login = document.querySelector('#login')
 const password = document.querySelector('#password')
 const signInErrorInfo = document.querySelector('.navigation__login-panel__error')
-const container = document.querySelector('.container')
 
-const currentDate = document.querySelector('.navigation__date-hour__date--margin')
-const currentTime = document.querySelector('.navigation__date-hour__time--padding')
 const departureCities = document.querySelector('#departureCities')
 const arrivalCities = document.querySelector('#arrivalCities')
-const errorInfo = document.querySelector('.container__error')
-const submitButton = document.querySelector('.container__panel__submit-button ')
-const luggageAmount = document.querySelector('#luggage')
-
 const adultsPassenegers = document.querySelector('#adultPass')
 const childrenPassenegers = document.querySelector('#childrensPass')
-
 const departureDate = new Date().toISOString().split('T')[0]
 const inputDepartureDate = document.querySelector('#departureDate')
 const inputReturnDate = document.querySelector('#returnDate')
 inputDepartureDate.setAttribute('min', departureDate)
+const luggageAmount = document.querySelector('#luggage')
+
+const submitButton = document.querySelector('.container__panel__submit-button ')
+const errorInfo = document.querySelector('.container__error')
 
 const summaryPage = document.querySelector('.summary')
 const summaryFlight = document.querySelector('.summary__flights')
@@ -224,35 +223,58 @@ const getCurrentTemperature = (lat, lon, APIKEY) => {
 		.catch(err => console.log(err))
 }
 
+async function getflight(adults, departure, destination, departureDate) {
+	const url = `https://skyscanner44.p.rapidapi.com/search-extended?adults=${adults}&origin=${departure}&destination=${destination}&departureDate=${departureDate}&currency=EUR&stops=0%2C1%2C2&duration=50&startFrom=00%3A00&arriveTo=23%3A59&returnStartFrom=00%3A00&returnArriveTo=23%3A59`
+	const options = {
+		method: 'GET',
+		headers: {
+			'X-RapidAPI-Key': '4b3ba86928msh83cd6a7d580ee08p1b7cddjsn2c4894141241',
+			'X-RapidAPI-Host': 'skyscanner44.p.rapidapi.com',
+		},
+	}
+
+	try {
+		const response = await fetch(url, options)
+		const result = await response.json()
+
+		getFlightInfo(result)
+		console.log(result)
+	} catch (error) {
+		console.error(error)
+	}
+}
+
 const getFlightInfo = param => {
 	let timeString
-	for (let i = 0; i <= 1; i++) {
+	console.log(flightInfo)
+
+	for (let i = 0; i <= 2; i++) {
 		let resultsArr = param.itineraries.results[i].legs
 		resultsArr.forEach(el => {
-			flightInfo.arrivals.push(el.arrival.slice(-8))
-			flightInfo.departures.push(el.departure.slice(-8))
+			flightInfo.arrivals.push(el.arrival.slice(11, -3))
+			flightInfo.departures.push(el.departure.slice(11, -3))
 
 			let hours = Math.floor(el.durationInMinutes / 60)
 			let minutes = el.durationInMinutes % 60
-			timeString = hours + `:` + (minutes < 10 ? (minutes = `0${minutes}`) : minutes)
+			timeString = hours + ` h ` + (minutes < 10 ? (minutes = `0${minutes} min`) : minutes + ' min')
 
 			flightInfo.durations.push(timeString)
 		})
 		let flightPrice = param.itineraries.results[i].pricing_options[0].price.amount
-		flightInfo.ticketPrices.push(flightPrice)
+		flightInfo.ticketPrices.push(...[flightPrice, flightPrice])
 	}
-	console.log(flightInfo)
+
 	getFlightDataToDiv()
 }
 
 const createParagraph = (param1, param2) => {
-	param1.innerText = param2
 	param1.classList.add('summary__flights__flightInfo__paragraph')
+	param1.textContent = param2
 }
 
 const getFlightDataToDiv = () => {
 	if (flightInfo.arrivals.length !== 0) {
-		for (let i = 0; i < flightInfo.arrivals.length; i++) {
+		for (let i = 0; i <= 2; i++) {
 			const summaryFlightDiv = document.createElement('div')
 
 			const p1 = document.createElement('p')
@@ -289,24 +311,8 @@ const getFlightDataToDiv = () => {
 	}
 }
 
-async function getflight(adults, departure, destination, departureDate, returnDate) {
-	const url = `https://skyscanner44.p.rapidapi.com/search-extended?adults=${adults}&origin=${departure}&destination=${destination}&departureDate=${departureDate}&returnDate=${returnDate}&currency=EUR&stops=0%2C1%2C2&duration=50&startFrom=00%3A00&arriveTo=23%3A59&returnStartFrom=00%3A00&returnArriveTo=23%3A59`
-	const options = {
-		method: 'GET',
-		headers: {
-			'X-RapidAPI-Key': '4b3ba86928msh83cd6a7d580ee08p1b7cddjsn2c4894141241',
-			'X-RapidAPI-Host': 'skyscanner44.p.rapidapi.com',
-		},
-	}
-
-	try {
-		const response = await fetch(url, options)
-		const result = await response.json()
-
-		getFlightInfo(result)
-	} catch (error) {
-		console.error(error)
-	}
+const createInnerHTML = (param, param1) => {
+	param.innerHTML = param1
 }
 
 inputDepartureDate.addEventListener('change', () => {
@@ -404,6 +410,8 @@ submitButton.addEventListener('click', () => {
 		inputReturnDate.value !== '' &&
 		luggageAmount.value !== '0'
 	) {
+		const container = document.querySelector('.container')
+
 		const summaryDepartureCity = document.querySelector('.summary__informations__panel-first__departure-city')
 		const summaryArrivalCity = document.querySelector('.summary__informations__panel-first__arrival-city')
 		const summaryDepartureDate = document.querySelector('.summary__informations__panel-first__departure-date')
@@ -412,23 +420,36 @@ submitButton.addEventListener('click', () => {
 		const summaryLuggage = document.querySelector('.summary__informations__panel-second__luggage')
 		const secondSummaryPanel = document.querySelector('.summary__informations__panel-second')
 
-		getflight(adultsPassenegers.value, codeObj.code, codeObj.code1, inputDepartureDate.value, inputDepartureDate.value)
+		getflight(adultsPassenegers.value, codeObj.code, codeObj.code1, inputDepartureDate.value)
 
 		setTimeout(() => {
 			summaryPage.style.display = 'flex'
 			container.style.display = 'none'
-			summaryDepartureCity.innerHTML = `<i class="fa-sharp fa-solid fa-plane-departure"></i> ${departureCities.value}`
-			summaryArrivalCity.innerHTML = `<i class="fa-solid fa-plane-arrival"></i> ${arrivalCities.value}`
-			summaryDepartureDate.innerHTML = `<div> <i
-		class="fa-solid fa-calendar-days"></i> <i class="fa-solid fa-arrow-right"></i> </div> ${inputDepartureDate.value}`
-			summaryReturnDate.innerHTML = `<div><i
-		class="fa-solid fa-calendar-days"></i> <i class="fa-solid fa-arrow-left"></i></div> ${inputReturnDate.value}`
-			summaryPassenger.innerHTML = `<div><i class="fa-solid fa-user"></i> ${adultsPassenegers.value} </div> ${
-				childrenPassenegers.value === '0'
-					? ''
-					: `<div> <i class="fa-solid fa-child"></i> ${childrenPassenegers.value}</div> `
-			}`
-			summaryLuggage.innerHTML = `<i class="fa-solid fa-suitcase"></i> ${luggageAmount.value}`
+
+			createInnerHTML(
+				summaryDepartureCity,
+				`<i class="fa-sharp fa-solid fa-plane-departure"></i> ${departureCities.value}`
+			)
+			createInnerHTML(summaryArrivalCity, `<i class="fa-solid fa-plane-arrival"></i> ${arrivalCities.value}`)
+			createInnerHTML(
+				summaryDepartureDate,
+				`<div> <i
+				class="fa-solid fa-calendar-days"></i> <i class="fa-solid fa-arrow-right"></i> </div> ${inputDepartureDate.value}`
+			)
+			createInnerHTML(
+				summaryReturnDate,
+				`<div><i
+				class="fa-solid fa-calendar-days"></i> <i class="fa-solid fa-arrow-left"></i></div> ${inputReturnDate.value}`
+			)
+			createInnerHTML(
+				summaryPassenger,
+				`<div><i class="fa-solid fa-user"></i> ${adultsPassenegers.value} </div> ${
+					childrenPassenegers.value === '0'
+						? ''
+						: `<div> <i class="fa-solid fa-child"></i> ${childrenPassenegers.value}</div> `
+				}`
+			)
+			createInnerHTML(summaryLuggage, `<i class="fa-solid fa-suitcase"></i> ${luggageAmount.value}`)
 		}, 500)
 	}
 })

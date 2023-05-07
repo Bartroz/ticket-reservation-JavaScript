@@ -31,11 +31,9 @@ body {
 }
 
 .navigation {
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
-	background-color: #e2d5d573;
+	@include dispayFlex(space-around, center);
 	height: 75px;
+	background-color: #e2d5d573;
 	&__date-hour,
 	&__arrival-weather,
 	&__login {
@@ -47,13 +45,12 @@ body {
 	}
 	&__arrival-weather,
 	&__date-hour {
-		text-align: center;
 		font-size: $navFont;
+		text-align: center;
 	}
 
 	&__date-hour {
-		@include flexCenter();
-		align-items: flex-start;
+		@include dispayFlex(center, flex-start);
 		flex-direction: column;
 
 		&__date {
@@ -66,8 +63,8 @@ body {
 		}
 		&__time {
 			&--padding {
-				padding-bottom: 3px;
 				margin-bottom: 5px;
+				padding-bottom: 3px;
 				i {
 					margin-right: 5px;
 				}
@@ -92,13 +89,10 @@ body {
 	}
 	&__login-panel {
 		@include posAbsuluteCenter();
+		@include dispayFlex(center, center);
+		@include imageCenter('/src/images/Sky640.jpg');
 		display: none;
-		justify-content: center;
-		align-items: center;
-		background-image: url('/src/images/Sky640.jpg');
-		background-size: cover;
-		background-position: center;
-		height: 85vh;
+		height: 800px;
 		width: 90vw;
 		border-radius: 20px;
 		z-index: 5;
@@ -110,8 +104,8 @@ body {
 			width: 100%;
 			z-index: 5;
 			input {
-				padding: 5px;
 				margin: 10px 0;
+				padding: 5px;
 				width: 50%;
 			}
 			button {
@@ -132,16 +126,16 @@ body {
 			}
 			i {
 				position: absolute;
-				font-size: 30px;
-				padding: 10px;
 				top: -100%;
 				right: 5%;
+				padding: 10px;
+				font-size: 30px;
 			}
 		}
 		&__error {
 			position: absolute;
-			z-index: 6;
 			top: -50%;
+			z-index: 6;
 			color: red;
 			font-size: 17px;
 		}
@@ -150,16 +144,16 @@ body {
 
 .header {
 	position: relative;
-	height: 130px;
 	width: 100%;
+	height: 130px;
 	background-color: $primaryColor;
 	&__text {
 		@include posAbsuluteCenter();
 		width: 100%;
 		&__headline {
 			&--font {
-				text-align: center;
 				font-size: 24px;
+				text-align: center;
 			}
 		}
 		&__paragraph {
@@ -180,10 +174,13 @@ body {
 		height: 100%;
 		background-color: $secondaryColor;
 
-		&__flight-places {
+		&__flight-places,
+		&__passengers,
+		&__travel-date {
 			@include flexCenter();
 			flex-direction: column;
-
+		}
+		&__flight-places {
 			&__departure,
 			&__arrival {
 				@include flexCenter();
@@ -193,9 +190,6 @@ body {
 		}
 
 		&__passengers {
-			@include flexCenter();
-			flex-direction: column;
-
 			&__adults,
 			&__childrens {
 				@include flexCenter();
@@ -205,9 +199,6 @@ body {
 		}
 
 		&__travel-date {
-			@include flexCenter();
-			flex-direction: column;
-
 			&__departure-date,
 			&__return-date {
 				@include flexCenter();
@@ -252,9 +243,7 @@ body {
 .summary {
 	@include posAbsuluteCenter;
 	@include imageCenter('/src/images/clouds640.jpg');
-	display: flex;
-	justify-content: center;
-	align-items: flex-start;
+	@include dispayFlex(center, flex-start);
 	flex-direction: column;
 	display: none;
 	width: 100%;
@@ -265,7 +254,6 @@ body {
 			font-weight: 700;
 			color: $primaryColor;
 		}
-		position: sticky;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-evenly;
@@ -275,9 +263,7 @@ body {
 		border: 10px double $primaryColor;
 		&__panel-first,
 		&__panel-second {
-			display: flex;
-			align-items: flex-start;
-			justify-content: space-between;
+			@include dispayFlex(space-between, flex-start);
 			flex-wrap: wrap;
 			margin-top: 5px;
 			padding: 7px 5px;
@@ -339,9 +325,9 @@ body {
 			display: grid;
 			grid-template-columns: repeat(4, auto);
 			grid-template-rows: 1fr 3fr;
-			margin: 20px auto;
+			margin: 30px auto;
 			width: 90%;
-			height: 120px;
+			height: 100px;
 			background-color: $primaryColor;
 			border-radius: 10px;
 			color: $whiteColor;
@@ -374,9 +360,7 @@ body {
 		text-align: center;
 	}
 	.footer-links {
-		display: flex;
-		justify-content: center;
-		align-items: center;
+		@include dispayFlex(center, center);
 		font-size: 10px;
 		margin-bottom: 10px;
 		&__link {
@@ -390,15 +374,6 @@ body {
 			text-decoration: none;
 			cursor: pointer;
 		}
-	}
-}
-
-@keyframes showInfoError {
-	from {
-		top: -50%;
-	}
-	to {
-		top: 30%;
 	}
 }
 
@@ -451,13 +426,12 @@ body {
 			}
 		}
 		&__login-panel {
+			@include imageCenter('/src/images/sky1280.jpg');
 			height: 1000px;
-			background-image: url('/src/images/sky1280.jpg');
-			top: 70%;
 			&__inputs {
 				input {
-					padding: 10px;
 					margin: 20px 0;
+					padding: 10px;
 				}
 				button {
 					margin-top: 25px;
@@ -531,7 +505,7 @@ body {
 
 	.summary {
 		&__informations {
-			height: 45%;
+			height: 30%;
 			&__header {
 				font-size: 30px;
 			}
@@ -547,11 +521,11 @@ body {
 
 		&__flights {
 			&__flightInfo {
-				margin: 30px auto 20px;
-				height: 150px;
+				margin: 35px auto;
+				height: 130px;
 				&__paragraph {
 					margin-top: 15px;
-					font-size: 18px;
+					font-size: 20px;
 				}
 			}
 			&__flightErrorInfo {
@@ -576,19 +550,6 @@ body {
 					margin-right: 10px;
 				}
 			}
-			a {
-				text-decoration: none;
-				cursor: pointer;
-			}
-		}
-	}
-
-	@keyframes showInfoError {
-		from {
-			top: -50%;
-		}
-		to {
-			top: 45%;
 		}
 	}
 }
@@ -643,9 +604,9 @@ body {
 			}
 		}
 		&__login-panel {
-			height: 1250px;
-			top: 80%;
-			background-image: url('/src/images/sky1920.jpg');
+			@include imageCenter('/src/images/sky1920.jpg');
+			height: 90vh;
+			width: 75vw;
 			&__inputs {
 				input {
 					padding: 10px;
@@ -714,14 +675,14 @@ body {
 
 	.summary {
 		flex-direction: row;
-		height: 800px;
+
 		&__informations {
 			justify-content: flex-start;
 			height: 100%;
 			width: 30%;
 			border: none;
 			&__header {
-				margin: 50px 0;
+				margin: 50px 0 15px;
 				color: royalblue;
 			}
 			&__panel-first,
@@ -732,7 +693,7 @@ body {
 				div {
 					display: inline;
 					margin: 10px 0;
-					width: 180px;
+					width: 220px;
 					height: 50px;
 					line-height: 50px;
 					text-align: left;
@@ -753,7 +714,7 @@ body {
 			&__flightInfo {
 				margin: 30px auto 20px;
 				height: 170px;
-				border: 4px solid $primaryColor;
+				border: 4px solid royalblue;
 				border-radius: 20px;
 				background: none;
 
@@ -764,8 +725,8 @@ body {
 					border-top-right-radius: 16px;
 				}
 				:nth-child(-n + 4) {
-					border-bottom: 2px outset $primaryColor;
-					background-color: $primaryColor;
+					border-bottom: 2px outset royalblue;
+					background-color: royalblue;
 					color: $whiteColor;
 				}
 				&__paragraph {
@@ -778,7 +739,7 @@ body {
 			&__flightErrorInfo {
 				position: absolute;
 				top: 50%;
-				margin: 0;
+				margin: 0 10px;
 				transform: translateY(-50%);
 			}
 		}
@@ -793,15 +754,6 @@ body {
 			&__link {
 				margin: 0 64px;
 			}
-		}
-	}
-
-	@keyframes showInfoError {
-		from {
-			top: -50%;
-		}
-		to {
-			top: 50%;
 		}
 	}
 }
@@ -832,5 +784,13 @@ body {
 	to {
 		left: 0%;
 		margin: 0 auto;
+	}
+}
+@keyframes showInfoError {
+	from {
+		top: -50%;
+	}
+	to {
+		top: 30%;
 	}
 }

@@ -3,6 +3,13 @@
 	justify-content: center;
 	align-items: center;
 }
+
+@mixin dispayFlex($jc, $ai) {
+	display: flex;
+	justify-content: $jc;
+	align-items: $ai;
+}
+
 @mixin posAbsuluteCenter() {
 	position: absolute;
 	top: 50%;
