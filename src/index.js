@@ -225,19 +225,23 @@ const getCurrentTemperature = (lat, lon, APIKEY) => {
 }
 
 const getFlightInfo = param => {
-	for (let i = 0; i < param.itineraries.results.length; i++) {
-		if (param.itineraries.results.length > 10) {
-			param.itineraries.results.length = 3
-		}
+	let timeString
+	for (let i = 0; i <= 1; i++) {
 		let resultsArr = param.itineraries.results[i].legs
 		resultsArr.forEach(el => {
-			flightInfo.arrivals.push(el.arrival)
-			flightInfo.departures.push(el.departure)
-			flightInfo.durations.push(el.durationInMinutes)
+			flightInfo.arrivals.push(el.arrival.slice(-8))
+			flightInfo.departures.push(el.departure.slice(-8))
+
+			let hours = Math.floor(el.durationInMinutes / 60)
+			let minutes = el.durationInMinutes % 60
+			timeString = hours + `:` + (minutes < 10 ? (minutes = `0${minutes}`) : minutes)
+
+			flightInfo.durations.push(timeString)
 		})
 		let flightPrice = param.itineraries.results[i].pricing_options[0].price.amount
 		flightInfo.ticketPrices.push(flightPrice)
 	}
+	console.log(flightInfo)
 	getFlightDataToDiv()
 }
 
@@ -254,17 +258,17 @@ const getFlightDataToDiv = () => {
 			const p1 = document.createElement('p')
 			createParagraph(p1, 'Departure')
 			summaryFlightDiv.appendChild(p1)
-			
+
 			const p2 = document.createElement('p')
 			createParagraph(p2, 'Arrival')
 			summaryFlightDiv.appendChild(p2)
-			
+
 			const p3 = document.createElement('p')
 			createParagraph(p3, 'Duration')
 			summaryFlightDiv.appendChild(p3)
-			
+
 			const p4 = document.createElement('p')
-			createParagraph(p4, 'Price')
+			createParagraph(p4, 'Price (€)')
 			summaryFlightDiv.appendChild(p4)
 
 			for (const arrayName in flightInfo) {
