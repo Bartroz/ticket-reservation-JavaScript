@@ -54,12 +54,6 @@ let flightInfo = {
 	durations: [],
 	ticketPrices: [],
 }
-// let flightInfo = {
-// 	arrival: [],
-// 	departure: [],
-// 	duration: [],
-// 	ticketPrices: [],
-// }
 
 let codeObj = {
 	code: '',
@@ -247,16 +241,39 @@ const getFlightInfo = param => {
 	getFlightDataToDiv()
 }
 
-const createElementArr = [document.createElement('p'), document.createElement('p'), document.createElement('p')]
+const createParagraph = (param1, param2) => {
+	param1.innerText = param2
+	param1.classList.add('summary__flights__flightInfo__paragraph')
+}
 
 const getFlightDataToDiv = () => {
 	if (flightInfo.arrivals.length !== 0) {
 		for (let i = 0; i < flightInfo.arrivals.length; i++) {
 			const summaryFlightDiv = document.createElement('div')
 
-			summaryFlightParagraph1.textContent = flightInfo.departures[i]
-			summaryFlightParagraph2.textContent = flightInfo.arrivals[i]
-			summaryFlightDiv.appendChild(summaryFlightParagraph1, summaryFlightParagraph2)
+			const p1 = document.createElement('p')
+			createParagraph(p1, 'Departure')
+			summaryFlightDiv.appendChild(p1)
+			
+			const p2 = document.createElement('p')
+			createParagraph(p2, 'Arrival')
+			summaryFlightDiv.appendChild(p2)
+			
+			const p3 = document.createElement('p')
+			createParagraph(p3, 'Duration')
+			summaryFlightDiv.appendChild(p3)
+			
+			const p4 = document.createElement('p')
+			createParagraph(p4, 'Price')
+			summaryFlightDiv.appendChild(p4)
+
+			for (const arrayName in flightInfo) {
+				const p = document.createElement('p')
+				p.innerText = flightInfo[arrayName][i]
+				p.classList.add('summary__flights__flightInfo__paragraph')
+				summaryFlightDiv.appendChild(p)
+			}
+
 			summaryFlightDiv.classList.add('summary__flights__flightInfo')
 			summaryFlight.appendChild(summaryFlightDiv)
 		}

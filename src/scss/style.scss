@@ -265,7 +265,7 @@ body {
 			font-weight: 700;
 			color: $primaryColor;
 		}
-		position: relative;
+		position: sticky;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-evenly;
@@ -346,8 +346,9 @@ body {
 			border-radius: 10px;
 			color: $whiteColor;
 			border: 1px solid $secondaryColor;
-			p {
-				margin-top: 5px;
+			&__paragraph {
+				margin-top: 10px;
+				font-size: 16px;
 				text-align: center;
 			}
 		}
@@ -548,6 +549,10 @@ body {
 			&__flightInfo {
 				margin: 30px auto 20px;
 				height: 150px;
+				&__paragraph {
+					margin-top: 15px;
+					font-size: 18px;
+				}
 			}
 			&__flightErrorInfo {
 				margin: 50px 15px 0;
@@ -727,7 +732,7 @@ body {
 				div {
 					display: inline;
 					margin: 10px 0;
-					width: 200px;
+					width: 180px;
 					height: 50px;
 					line-height: 50px;
 					font-size: 20px;
@@ -750,13 +755,17 @@ body {
 				border: 4px solid $primaryColor;
 				border-radius: 25px;
 				background: none;
+				&__paragraph {
+					color: royalblue;
+					margin-top: 15px;
+					font-size: 20px;
+				}
 			}
 			&__flightErrorInfo {
 				position: absolute;
 				top: 50%;
 				margin: 0;
 				transform: translateY(-50%);
-		
 			}
 		}
 	}
