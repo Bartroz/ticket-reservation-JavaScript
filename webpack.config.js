@@ -13,7 +13,7 @@ module.exports = {
 	devtool: 'source-map',
 	devServer: {
 		static: {
-			directory: path.join(__dirname, 'src'),
+			directory: path.join(__dirname, 'docs'),
 		},
 		port: 9000,
 	},
