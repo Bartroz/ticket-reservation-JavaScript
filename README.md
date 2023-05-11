@@ -11,7 +11,7 @@ Below I put the instruction how to correctly run this project on your computer.
 * Write in terminal `npm run start:dev`
 * Open your browser and write "localhost:9000" and enjoy my ticket-reservation website!
 
-**IMPORTANT**  
+## **IMPORTANT**  
 In appication is used two kind of API which require certain action:
 - https://openweathermap.org/api  
 Used to display current departure city's weather.  
