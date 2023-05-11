@@ -1,4 +1,4 @@
-Hello everyone  
+# Hello everyone  
 Welcome to my ticket-reservation project written in JavaScript!
 
 Below I put the instruction how to correctly run this project on your computer.
