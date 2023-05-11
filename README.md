@@ -15,7 +15,7 @@ Below I put the instruction how to correctly run this project on your computer.
 In appication is used two kind of API which require certain action:
 - https://openweathermap.org/api  
 Used to display current departure city's weather.  
-To works this API properly you have to generate you onw API key and insert it in bar **385** `const apiKey`
+To works this API properly you have to generate you onw API key and insert it in bar **385** `const apiKey` placed in `index.js` file
 
 - https://rapidapi.com/3b-data-3b-data-default/api/skyscanner44  
 Used to fetch information about flight.
