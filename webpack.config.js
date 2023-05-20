@@ -7,13 +7,13 @@ module.exports = {
 	
 	},
 	output: {
-		path: path.resolve(__dirname, 'src'),
+		path: path.resolve(__dirname, 'dist'),
 		filename: 'bundle.js',
 	},
 	devtool: 'source-map',
 	devServer: {
 		static: {
-			directory: path.join(__dirname, 'src'),
+			directory: path.join(__dirname, 'dist'),
 		},
 		port: 9000,
 	},
