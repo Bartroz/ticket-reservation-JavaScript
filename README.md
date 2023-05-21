@@ -1,5 +1,4 @@
-# Hello everyone  
-Welcome to my ticket-reservation project!
+# Welcome to my ticket-reservation project!
 
 Below I put the instruction how to correctly run this project on your computer.
 
@@ -12,6 +11,8 @@ Below I put the instruction how to correctly run this project on your computer.
 * Open your browser and write "localhost:9000" and enjoy my ticket-reservation website!
 
 ## **IMPORTANT**  
+_If you have a troubleshooting with API below I put the steps how to handle this problem._
+
 In appication is used two kind of API which require certain action:
 - https://openweathermap.org/api  
 Used to display current departure city's weather.  
