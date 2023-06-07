@@ -34,15 +34,18 @@ body {
 	@include dispayFlex(space-around, center);
 	height: 75px;
 	background-color: #e2d5d573;
+
 	&__date-hour,
 	&__arrival-weather,
 	&__login {
 		width: 100px;
 	}
+
 	&__arrival-weather,
 	&__login {
 		@include flexCenter;
 	}
+
 	&__arrival-weather,
 	&__date-hour {
 		font-size: $navFont;
@@ -52,7 +55,6 @@ body {
 	&__date-hour {
 		@include dispayFlex(center, flex-start);
 		flex-direction: column;
-
 		&__date {
 			&--margin {
 				margin: 5px 0;
@@ -61,6 +63,7 @@ body {
 				}
 			}
 		}
+
 		&__time {
 			&--padding {
 				margin-bottom: 5px;
